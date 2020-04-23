@@ -20,7 +20,7 @@ def class_find(class_list, st_num, target):
 			class_list[i].printStudent()
 			return i
 	print("\t[Not Find !]")
-	return False
+	return -1
 	#function add	
 def class_add(class_list, newst):
 	newst = student(newst[0],newst[1],newst[2])
@@ -34,6 +34,17 @@ def class_edit(target, newdt):
 def class_delete(class_list, target):
 	class_list.remove(target)
 
+def class_sort(class_list, st_num):
+	for i in range(st_num-1):
+		for k in range(i+1, st_num):
+			if class_list[i].id > class_list[k].id:
+				swap(class_list, i, k)
+
+def swap(class_list, st1, st2):
+	tmp = class_list[st1]
+	class_list[st1] = class_list[st2]
+	class_list[st2] = tmp
+
 # ********* MAIN **********
 st_list = []
 st_num = 10
@@ -45,7 +56,7 @@ for i in range(st_num):
 
 	# 主選單
 while chose!=0:
-	chose = int( input('\n\t@主選單@\n(1)查詢學生\n(2)新增學生\n(3)編輯學生\n(4)刪除學生\n(5)印出班級\n(0)結束\n請輸入: ') )
+	chose = int( input('\n\t@主選單@\n(1)查詢學生\n(2)新增學生\n(3)編輯學生\n(4)刪除學生\n(5)印出班級\n(6)排序班級學號\n(0)結束\n請輸入: ') )
 	if chose==0: # 結束
 		break
 		# 查詢
@@ -55,7 +66,7 @@ while chose!=0:
 		# 新增
 	elif chose==2: 
 		newst = input('請依序輸入 學號 名稱 成績: ').split()
-		if class_find(st_list, st_num, newst[0])==False:
+		if class_find(st_list, st_num, newst[0])==-1:
 			class_add(st_list, newst)
 			st_num+=1
 		else:
@@ -72,14 +83,19 @@ while chose!=0:
 	elif chose==4:
 		_id = input('依序輸入欲刪除學生學號: ')
 		ot = class_find(st_list, st_num, _id)
-		if ot!=False:
+		print(ot)
+		if ot!=-1:
 			class_delete(st_list, st_list[ot])
 			st_num-=1
+			print('run1')
 		else:
 			print('\t [無此學生]')
 		# 印出班級
 	elif chose==5:
 		class_print(st_list, st_num)
+		# 排序班級
+	elif chose==6:
+		class_sort(st_list, st_num)
 	
 	# END
 print('\t[ 程式結束 ]')
