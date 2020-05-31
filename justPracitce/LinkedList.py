@@ -3,6 +3,7 @@ class link:
 	def __init__(self, element):
 		self.val = element
 		self.next = None
+		
 	def add(self, element):
 		tmp = self
 		while(tmp.next != None):
